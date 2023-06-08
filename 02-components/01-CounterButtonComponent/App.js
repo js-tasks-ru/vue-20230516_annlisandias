@@ -13,18 +13,22 @@ export default defineComponent({
       count: undefined,
     };
   },
-
+  methods: {
+    updateCount(payload) {
+      this.count = payload;
+    }
+  },
   template: `
     <div class="sample container">
       <p>count = {{ count }}</p>
       <p>
-        <CounterButton :count="count" @update:count="count = $event" />
+        <CounterButton :count="count" @updateCount="updateCount" />
       </p>
       <p>
-        <CounterButton v-model:count="count" />
+        <CounterButton v-model:count="count" @updateCount="updateCount" />
       </p>
       <p>
-        <CounterButton v-model:count="count" />
+        <CounterButton v-model:count="count" @updateCount="updateCount" />
       </p>
     </div>
   `,
