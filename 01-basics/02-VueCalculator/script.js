@@ -7,22 +7,24 @@ createApp({
         return {
             first_number: 0,
             second_number: 0,
-            result: 0
+            operator: null
         }
     },
-    methods: {
-        sum() {
-            return first_number + second_number;
-        },
-        subtract() {
-            return first_number - second_number;
-        },
-        multiply() {
-            return first_number * second_number;
-        },
-        divide() {
-            return first_number / second_number;
-        },
+    computed: {
+        result() {
+            if (this.operator === 'sum') {
+                return this.first_number + this.second_number;
+            }
+            if (this.operator === 'subtract') {
+                return this.first_number - this.second_number;
+            }
+            if (this.operator === 'multiply') {
+                return this.first_number * this.second_number;
+            }
+            if (this.operator === 'divide') {
+                return this.first_number / this.second_number;
+            }
+        }
     },
     template: `
         <div class="row">
@@ -31,10 +33,10 @@ createApp({
             </div>
 
             <div class="col" style="display: flex; flex-direction: column; font-family: emoji">
-                <label><input type="radio" name="operator" value="sum" @click="sum()" /> ➕</label>
-                <label><input type="radio" name="operator" value="subtract" @click="subtract()" /> ➖</label>
-                <label><input type="radio" name="operator" value="multiply" @click="multiply()" /> ✖</label>
-                <label><input type="radio" name="operator" value="divide" @click="divide()" /> ➗</label>
+                <label><input type="radio" v-model="operator" name="operator" value="sum" /> ➕</label>
+                <label><input type="radio" v-model="operator" name="operator" value="subtract"  /> ➖</label>
+                <label><input type="radio" v-model="operator" name="operator" value="multiply" /> ✖</label>
+                <label><input type="radio" v-model="operator" name="operator" value="divide" /> ➗</label>
             </div>
 
             <div class="col">
