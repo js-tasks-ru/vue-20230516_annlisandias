@@ -4,6 +4,19 @@ const API_URL = 'https://course-vue.javascript.ru/api';
 
 // Требуется создать Vue приложение
 
+function fetchMeetupById(meetupId) {
+  return fetch(`${API_URL}/meetups/${meetupId}`)
+  .then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      return response.json().then((error) => {
+        throw error;
+      });
+    }
+  })
+}
+
 createApp({
   data() {
       return {
@@ -11,25 +24,11 @@ createApp({
           currentMeetupTitle: null
       }
   },
-  methods: {
-    fetchMeetupById(meetupId) {
-      return fetch(`${API_URL}/meetups/${meetupId}`)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          return response.json().then((error) => {
-            throw error;
-          });
-        }
-      })
-    }
-  },
   watch: {
     meetupId: {
       handler(newValue, oldValue) {
         if(newValue) {
-            this.fetchMeetupById(newValue).then((data) => {
+            fetchMeetupById(newValue).then((data) => {
               this.currentMeetupTitle = data.title;
             });
         }
