@@ -40,18 +40,15 @@ createApp({
 
         }
     },
+    
     computed: {
       filteredEmails() {
-          if(this.search) {
-            const searchFilter = (email) => 
-                [email]
-                .join(' ')
-                .includes(this.search);
-            return this.emails.filter(email => searchFilter(email)); 
-          } else {
-            return [];
-          }  
-        }   
+        return this.emails.map(item => (
+          {
+            name: item,
+            marked: this.search !== '' && item.includes(this.search)
+          }));
+      }
     },
    
     template: `
@@ -62,8 +59,8 @@ createApp({
       <ul>
       
       </ul>
-        <li v-for="email in emails" :class="[{ 'marked' : this.filteredEmails.includes(email) }]">
-        {{ email }}
+        <li v-for="email in filteredEmails" :class="[{ 'marked' : email.marked }]">
+        {{ email.name }}
         </li>
       </ul>
   </div>
